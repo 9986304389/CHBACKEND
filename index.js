@@ -17,6 +17,7 @@ const port = 3001;
 
 
 const isSSL = false;
+
 const pool = new Pool({
     connectionString: 'postgres://postgres:KAVItha@123@localhost:5432/postgres',
     ssl: {
