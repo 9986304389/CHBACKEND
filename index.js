@@ -15,7 +15,7 @@ const pool = new Pool({
   },
 });
 
-app.get('/t', async (req, res) => {
+app.get('/test', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM login_user');
     res.json(result.rows);
