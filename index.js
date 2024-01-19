@@ -21,6 +21,15 @@ app.get('/api/data', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+app.get('/', async (req, res) => {
+    try {
+      
+      res.json("hello");
+    } catch (error) {
+      console.error('Error executing SQL query', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
