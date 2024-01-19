@@ -10,6 +10,9 @@ const pool = new Pool({
   database: 'postgres',
   password: 'KAVItha@123',
   port: 5432,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 app.get('/api/data', async (req, res) => {
