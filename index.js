@@ -4,6 +4,7 @@ const serverless = require('serverless-http');
 const app = express();
 const port = 3001;
 
+const isSSL = false;
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
@@ -13,7 +14,11 @@ const pool = new Pool({
   ssl: {
     rejectUnauthorized: false,
   },
+  ssl: isSSL ? { rejectUnauthorized: false } : false,
 });
+
+
+
 
 app.get('/test', async (req, res) => {
   try {
@@ -26,16 +31,16 @@ app.get('/test', async (req, res) => {
 });
 app.get('/', async (req, res) => {
     try {
-      
-      res.json("hello");
+
+        res.json("hello");
     } catch (error) {
-      console.error('Error executing SQL query', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error executing SQL query', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-  });
+});
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+    console.log(`Server is running on port ${port}`);
 });
 
 
