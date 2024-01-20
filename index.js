@@ -4,40 +4,16 @@ const serverless = require('serverless-http');
 const app = express();
 const port = 3001;
 
-// const pool = new Pool({
-//   user: 'postgres',
-//   host: 'localhost',
-//   database: 'postgres',
-//   password: 'KAVItha@123',
-//   port: 5432,
-//   ssl: {
-//     rejectUnauthorized: false,
-//   },
-//});
-
-
-const isSSL = false;
+// Replace the URL with your ElephantSQL database URL
+const connectionString = 'postgres://imfhhxyp:1gBfqjymgT1l1pHd8roawKbljUrAMmtn@tiny.db.elephantsql.com:5432/imfhhxyp';
 
 const pool = new Pool({
-    connectionString: 'postgres://postgres:KAVItha@123@localhost:5432/postgres',
-    ssl: {
-        rejectUnauthorized: false,
-    },
-    ssl: isSSL ? { rejectUnauthorized: false } : false,
+  connectionString: connectionString,
 });
-
-// pool.query('SELECT NOW()', (err, res) => {
-//     if (err) {
-//         console.error('Error connecting to the database:', err);
-//     } else {
-//         console.log('Connected to the database. Current timestamp:', res.rows[0].now);
-//     }
-//     pool.end();
-// });
 
 app.get('/test', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM login_user');
+    const result = await pool.query('SELECT * FROM user_login');
     res.json(result.rows);
   } catch (error) {
     console.error('Error executing SQL query', error);
