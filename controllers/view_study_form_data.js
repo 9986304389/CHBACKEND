@@ -49,26 +49,7 @@ exports.view_study_form_data = async (req, res, next) => {
             return APIRes.getFinalResponse(true, `Get Data successfully.`, data, res);
 
         }
-        // if (result.rows.length > 0) {
-
-        //     // If email exists, update the existing record with the new data
-        //     const updateResult = await pool.query(
-        //         'UPDATE study_form_hdr SET readinformation = readinformation || $1, modifieddate = $2 WHERE email = $3 RETURNING *',
-        //         [readinformation, new Date(), email]
-        //     );
-
-        //     return APIRes.getFinalResponse(true, `Data save successfully.`, [], res);
-        // } else {
-        //     let createddate = new Date();
-        //     let modifieddate = new Date();
-        //     // If email doesn't exist, insert a new record
-        //     const insertResult = await pool.query(
-        //         'INSERT INTO study_form_hdr (name, email, readinformation, createddate, modifieddate) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-        //         [name, email, readinformation, createddate, modifieddate]
-        //     );
-
-        //     return APIRes.getFinalResponse(true, `Get Data successfully.`, [], res);
-        // }
+       
     } catch (error) {
         console.error('Error executing database query:', error);
         res.status(500).json({ error: 'Internal Server Error' });

@@ -66,11 +66,12 @@ exports.authenticateUser = async (req, res, next) => {
 
         const databasepassword = result.rows[0].password;
         const databaseemail = result.rows[0].email;
-
+        const name = result.rows[0].name;
+        console.log(result.rows)
         // Compare the entered password with the password from the database
         if (password === databasepassword && databaseemail == email) {
             // Passwords match, authentication successful
-            return APIRes.getFinalResponse(true, 'Authentication successful', [], res);
+            return APIRes.getFinalResponse(true, 'Authentication successful', [{databaseemail,name}], res);
         } else {
             // Passwords don't match
             return APIRes.getFinalResponse(false, 'Invalid email or password', [], res);
