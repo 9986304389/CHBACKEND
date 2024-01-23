@@ -33,7 +33,7 @@ exports.view_study_form_data = async (req, res, next) => {
 
 
     try {
-        if (userInput.email == 'adminnlf@gmail.com') {
+        if (userInput.email == 'admin@gmail.com') {
             // Check if the email already exists
             const result = await pool.query('SELECT * FROM study_form_hdr');
             console.log(result.rows)
