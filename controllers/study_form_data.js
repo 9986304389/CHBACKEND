@@ -35,8 +35,7 @@ exports.study_form_data = async (req, res, next) => {
     try {
         // Check if the email already exists
         const result = await pool.query('SELECT *  FROM study_form_hdr WHERE email = $1', [email]);
-
-
+        
         if (result.rows.length > 0) {
 
             const result = await pool.query(
