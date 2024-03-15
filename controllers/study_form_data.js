@@ -11,7 +11,7 @@ exports.study_form_data = async (req, res, next) => {
         throw errors.array();
     }
     const userInput = Utils.getReqValues(req);
-    console.log(userInput)
+
     const requiredFields = ["name", "email", "readinformation"];
     const inputs = validateUserInput.validateUserInput(userInput, requiredFields);
     if (inputs !== true) {
@@ -34,18 +34,32 @@ exports.study_form_data = async (req, res, next) => {
 
     try {
         // Check if the email already exists
-        const result = await pool.query('SELECT * FROM study_form_hdr WHERE email = $1', [email]);
+        const result = await pool.query('SELECT *  FROM study_form_hdr WHERE email = $1', [email]);
 
-        console.log(result.rows)
+
         if (result.rows.length > 0) {
 
-            // If email exists, update the existing record with the new data
-            const updateResult = await pool.query(
-                'UPDATE study_form_hdr SET readinformation = readinformation || $1, modifieddate = $2 WHERE email = $3 RETURNING *',
-                [readinformation, new Date(), email]
+            const result = await pool.query(
+                `SELECT * FROM study_form_hdr
+                WHERE name = $1
+                AND email = $2
+                AND readinformation @> $3`,
+                [name, email, [readinformation]]
             );
 
-            return APIRes.getFinalResponse(true, `Data save successfully.`, [], res);
+            console.log(result.rows)
+            if (result.rows == 0) {
+                // If email exists, update the existing record with the new data
+                const updateResult = await pool.query(
+                    'UPDATE study_form_hdr SET readinformation = readinformation || $1, modifieddate = $2 WHERE email = $3 RETURNING *',
+                    [readinformation, new Date(), email]
+                );
+
+                return APIRes.getFinalResponse(true, `Data save successfully.`, [], res);
+            }
+            else {
+                return APIRes.getFinalResponse(true, `Data already exist.`, [], res);
+            }
         } else {
             let createddate = new Date();
             let modifieddate = new Date();
