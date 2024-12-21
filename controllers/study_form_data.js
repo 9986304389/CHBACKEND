@@ -22,6 +22,7 @@ exports.study_form_data = async (req, res, next) => {
     let name = userInput.name;
     let email = userInput.email;
     let readinformation = userInput.readinformation;
+    let study_year = userInput.study_year;
 
     if (validateEmail(email)) {
         console.log("Email is valid");
@@ -35,7 +36,7 @@ exports.study_form_data = async (req, res, next) => {
     try {
         // Check if the email already exists
         const result = await pool.query('SELECT *  FROM study_form_hdr WHERE email = $1', [email]);
-    
+
         if (result.rows.length > 0) {
 
             const result = await pool.query(
@@ -64,8 +65,8 @@ exports.study_form_data = async (req, res, next) => {
             let modifieddate = new Date();
             // If email doesn't exist, insert a new record
             const insertResult = await pool.query(
-                'INSERT INTO study_form_hdr (name, email, readinformation, createddate, modifieddate) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-                [name, email, readinformation, createddate, modifieddate]
+                'INSERT INTO study_form_hdr (name, email, readinformation,study_year,createddate, modifieddate) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+                [name, email, readinformation, study_year, createddate, modifieddate]
             );
 
             return APIRes.getFinalResponse(true, `Data save successfully.`, [], res);
