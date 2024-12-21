@@ -43,8 +43,8 @@ exports.study_form_data = async (req, res, next) => {
                 `SELECT * FROM study_form_hdr
                 WHERE name = $1
                 AND email = $2
-                AND readinformation @> $3`,
-                [name, email, [readinformation]]
+                AND readinformation @> $3 AND study_year`,
+                [name, email, [readinformation],study_year]
             );
 
             console.log(result.rows)
