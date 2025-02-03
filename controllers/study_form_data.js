@@ -58,7 +58,7 @@ exports.study_form_data = async (req, res, next) => {
                 return APIRes.getFinalResponse(true, `Data save successfully.`, [], res);
             }
             else {
-                return APIRes.getFinalResponse(true, `Data already exist.`, [], res);
+                return APIRes.getFinalResponse(false, `Data already exist.`, [], res);
             }
         } else {
             let createddate = new Date();
